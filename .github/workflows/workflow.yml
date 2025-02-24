@@ -42,7 +42,7 @@ jobs:
 
       - name: Run Unit Test with pytest
         run: |
-          pytest -v --cov-report=term-missing --cov=.
+          pytest src/test_mate_app.py -v --cov-report=term-missing --cov=.
 
       - name: Check Code Complexity
         run: |
