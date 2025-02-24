@@ -1,0 +1,31 @@
+name: Python CI for GitHub Actions
+
+run-name: ${{ github.actor }} - ${{ github.sha }}
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main", "develop"]
+
+env:
+  PYTHON_VERSION: 3.13
+
+jobs:
+  python-ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
+
+    steps:
+      - name: Repository
+        uses: actions/checkout@v4
+      - name: Setup Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+            python-version: '${{ env.PYTHON_VERSION }}'
+      - name: Install Dependencies
+        run: |
+          python -m pip instaall --upgrade pip
+          pip install -r requirements.txt
