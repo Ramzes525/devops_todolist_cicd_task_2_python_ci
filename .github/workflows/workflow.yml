@@ -33,13 +33,16 @@ jobs:
           pip install coverage flake8 pytest pytest-cov
           pip install -r requirements.txt
 
-      - name: Run Unit Test with pytest
-        run: |
-          pytest -v --cov=src --cov-report=term-missing --cov-report=json
-
       - name: Check Code Style
         run: |
           flake8 src --statistics --exit-zero
+
+      - name: Coverage report
+        run: pytest --cov-report=xml --cov=.
+
+      - name: Run Unit Test with pytest
+        run: |
+          pytest -v --cov-report=term-missing --cov=.
 
       - name: Check Code Complexity
         run: |
@@ -49,5 +52,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: source-code
-          path: src/
-
+          path: .
